@@ -13,7 +13,7 @@ resource "azurerm_network_interface" "main" {
 }
 resource "azurerm_linux_virtual_machine" "main" {
   for_each = var.components
-  name                = "{each.key}-vm"
+  name                = "{each.key}"-vm
   resource_group_name = var.resource_group_name
   location            = var.location
   size                = each.value
