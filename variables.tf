@@ -24,6 +24,5 @@ variable "components" {
     order = "Standard_B1s"
     notification = "Standard_B1s"
     ratings = "Standard_B1s"
-    payment = "Standard_B1s"
   }
 }
