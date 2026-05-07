@@ -1,11 +1,11 @@
 resource "azurerm_network_interface" "main" {
   for_each = var.components
-  name                = "{each.key}-nic"
+  name                = "${each.key}-nic"
   location            = var.location
   resource_group_name = var.resource_group_name
 
   ip_configuration {
-    name                          = "{each.key}-nic"
+    name                          = "${each.key}-nic"
     subnet_id                     = "/subscriptions/7ba54b86-56e1-4dd5-a544-23df4caeb2aa/resourceGroups/Denmark-east-rg/providers/Microsoft.Network/virtualNetworks/image-vm-vnet/subnets/default"
     private_ip_address_allocation = "Dynamic"
     # public_ip_address_id          = azurerm_public_ip.frontend.id
@@ -13,7 +13,7 @@ resource "azurerm_network_interface" "main" {
 }
 resource "azurerm_linux_virtual_machine" "main" {
   for_each = var.components
-  name                = "{each.key}"-vm
+  name                = "${each.key}-vm"
   resource_group_name = var.resource_group_name
   location            = var.location
   size                = each.value
@@ -39,7 +39,7 @@ resource "azurerm_linux_virtual_machine" "main" {
 
 resource "azurerm_dns_a_record" "main" {
   for_each = var.components
-  name                = "{each.key}-dev"
+  name                = "${each.key}-dev"
   zone_name           = "kubek8.online"
   resource_group_name = var.resource_group_name
   ttl                 = 30
