@@ -43,6 +43,6 @@ resource "azurerm_dns_a_record" "main" {
   zone_name           = "kubek8.online"
   resource_group_name = var.resource_group_name
   ttl                 = 30
-  records             = [azurerm_network_interface.frontend[each.key].private_ip_address]
+  records             = [azurerm_network_interface.main[each.key].private_ip_address]
 }
 
