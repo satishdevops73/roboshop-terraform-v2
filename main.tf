@@ -16,10 +16,11 @@ resource "azurerm_linux_virtual_machine" "main" {
   name                = "{each.key}-vm"
   resource_group_name = var.resource_group_name
   location            = var.location
-  size                = "each.value"
+  size                = each.value
   #admin_username      = "adminuser"
   network_interface_ids = [
-    azurerm_network_interface.main.id,
+    #azurerm_network_interface.main.id, --> since we used for_each set here,Terraform doesn’t know which instance you mean, so we need to use azurerm_network_interface.main[each.key]
+    azurerm_network_interface.main[each.key].id
   ]
   os_disk {
     caching              = "ReadWrite"
@@ -42,6 +43,6 @@ resource "azurerm_dns_a_record" "main" {
   zone_name           = "kubek8.online"
   resource_group_name = var.resource_group_name
   ttl                 = 30
-  records             = [azurerm_network_interface.frontend.private_ip_address]
+  records             = [azurerm_network_interface.frontend[each.key].private_ip_address]
 }
 
